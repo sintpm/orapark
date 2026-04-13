@@ -123,25 +123,21 @@ h2.sh{font-size:clamp(26px,3.5vw,40px);font-weight:700;color:var(--dark);line-he
   .pgallery{padding:0 20px;grid-template-columns:1fr 1fr}
 }
 
-/* ── VIDEO ── */
-.vid-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start;margin-top:44px}
-.vplayer{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:16/9;cursor:pointer;background:#000;flex-shrink:0}
-.vplayer img{width:100%;height:100%;object-fit:cover;transition:opacity .3s,transform .5s}
-.vplayer:hover img{opacity:.8;transform:scale(1.03)}
-.play-ring{position:absolute;inset:0;display:grid;place-items:center}
-.play-c{width:68px;height:68px;border-radius:50%;background:rgba(201,168,76,.9);display:grid;place-items:center;transition:transform .3s,background .2s}
-.vplayer:hover .play-c{transform:scale(1.1);background:var(--gold)}
-.tri{border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:5px}
-.vlabel{position:absolute;bottom:14px;left:14px;background:rgba(7,17,28,.82);color:#fff;font-size:11px;padding:6px 12px;border-radius:3px;border-left:2px solid var(--gold)}
-.vdur{position:absolute;bottom:14px;right:14px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;padding:3px 8px;border-radius:3px}
-.vlist{display:flex;flex-direction:column;gap:10px}
-.vi{display:flex;gap:12px;align-items:center;padding:12px;border-radius:7px;cursor:pointer;border:1px solid transparent;transition:all .22s}
-.vi.on,.vi:hover{background:#fff;border-color:var(--border);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.vi-img{width:80px;height:50px;border-radius:5px;overflow:hidden;flex-shrink:0}
-.vi-img img{width:100%;height:100%;object-fit:cover}
-.vi-title{font-size:12px;font-weight:500;color:var(--dark);line-height:1.35;margin-bottom:3px}
-.vi.on .vi-title{color:var(--gold)}
-.vi-sub{font-size:10px;color:#bbb}
+/* VIDEO */
+.vlayout{display:grid;grid-template-columns:1.3fr 1fr;gap:36px;align-items:start;margin-top:44px}
+.vplayer-wrap{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:16/9;background:#000;box-shadow:0 8px 32px rgba(0,0,0,.18)}
+.vplayer-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.vlist{display:flex;flex-direction:column;gap:9px}
+.vi{display:flex;gap:11px;align-items:center;padding:10px;border-radius:7px;cursor:pointer;border:1px solid transparent;transition:all .22s}
+.vi.on,.vi:hover{background:#fff;border-color:var(--border);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.vi-img{width:76px;height:48px;border-radius:5px;overflow:hidden;flex-shrink:0}
+.vi-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.vi-img:hover img{transform:scale(1.06)}
+.vi-t{font-size:12px;font-weight:500;color:var(--dark);margin-bottom:3px;line-height:1.3}
+.vi.on .vi-t{color:var(--gold)}
+.vi-s{font-size:10px;color:#bbb}
+/* VIDEO MODAL – kept for fallback but hidden */
+.vmod{display:none!important}
 
 /* modal */
 .vmodal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;display:none;place-items:center;padding:20px}
@@ -316,6 +312,30 @@ footer{background:#030a12;padding:52px 52px 20px}
   footer{padding:44px 20px 18px}
   .fbot{flex-direction:column;gap:6px}
 }
+
+/* GOOGLE MAP BLOCK */
+.map-block{background:var(--light);padding:88px 0}
+.map-inner{max-width:1160px;margin:0 auto;padding:0 48px}
+.map-layout{display:grid;grid-template-columns:1fr 2fr;gap:32px;align-items:start;margin-top:36px}
+.map-info{display:flex;flex-direction:column;gap:14px}
+.map-card{background:#fff;border-radius:10px;padding:22px;border:1px solid var(--border)}
+.map-card-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
+.map-card-title{font-size:14px;font-weight:500;color:var(--dark);margin-bottom:4px}
+.map-card-sub{font-size:13px;color:#888;line-height:1.6}
+.map-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}
+.map-row:last-child{margin-bottom:0}
+.map-row span:first-child{color:#888}
+.map-row span:last-child{font-weight:500;color:var(--dark)}
+.map-cta{background:var(--dark);border-radius:10px;padding:22px}
+.map-tel{font-size:20px;font-weight:700;color:#fff;text-decoration:none;display:block;margin-bottom:10px}
+.map-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:11px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif}
+.map-frame-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,.08);position:relative;aspect-ratio:16/9}
+.map-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+@media(max-width:960px){
+  .map-inner{padding:0 20px}
+  .map-layout{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -332,7 +352,7 @@ footer{background:#030a12;padding:52px 52px 20px}
     <li><a href="#reviews">Đánh giá</a></li>
   </ul>
   <div class="nright">
-    <a href="tel:0827156156" class="ntel">☎ 0827 156 156</a>
+    <a href="tel:0909990580" class="ntel">☎ 090 999 0580</a>
     <button class="nbtn" onclick="openPopup()">Đăng ký ngay</button>
   </div>
 </nav>
@@ -367,12 +387,12 @@ footer{background:#030a12;padding:52px 52px 20px}
       <div class="hfg"><label>Họ và tên *</label><input type="text" id="hp-name" placeholder="Nguyễn Văn A"/></div>
       <div class="hfg"><label>Số điện thoại *</label><input type="tel" id="hp-phone" placeholder="0901 234 567"/></div>
       <div class="hfg"><label>Quan tâm đến</label>
-        <select><option value="">-- Loại hình --</option><option>Nhà phố liên kế</option><option>Biệt thự song lập</option><option>Shophouse</option></select>
+        <select><option value="">-- Loại hình --</option><option>Nhà phố liên kế</option><option>Biệt thự song lập</option><option>Shophouse</option><option>Căn hộ chung cư</option></select>
       </div>
       <button class="hp-submit" onclick="submitHP()">🔑 Đăng ký ngay</button>
       <div class="hp-note">🔒 Thông tin bảo mật tuyệt đối</div>
       <div class="hp-divider"><span>hoặc gọi ngay</span></div>
-      <div class="hp-tel"><a href="tel:0827156156">0827 156 156</a></div>
+      <div class="hp-tel"><a href="tel:0909990580">090 999 0580</a></div>
     </div>
     <div class="hp-success" id="hpSuccess">
       <div class="ck">✅</div>
@@ -384,10 +404,9 @@ footer{background:#030a12;padding:52px 52px 20px}
 
 <!-- ── PROMO ── -->
 <div class="promo">
-  <div class="promo-i">🎁 Tặng 1 Chỉ Vàng SJC</div><div class="promo-dot"></div>
-  <div class="promo-i">Chiết khấu 1%</div><div class="promo-dot"></div>
   <div class="promo-i">Hỗ trợ vay 70%</div><div class="promo-dot"></div>
-  <div class="promo-i">Sổ hồng riêng từng lô</div><div class="promo-dot"></div>
+  <div class="promo-i">Sổ hồng riêng từng nền</div><div class="promo-dot"></div>
+  <div class="promo-i">Xây dựng tự do</div><div class="promo-dot"></div>
   <div class="promo-i"><button onclick="openPopup()" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif">Đăng ký →</button></div>
 </div>
 
@@ -432,47 +451,46 @@ footer{background:#030a12;padding:52px 52px 20px}
   </div>
 </section>
 
-<!-- ── VIDEO ── -->
-<div class="on-light" id="video">
-  <div class="w">
-    <div class="ey">Video dự án</div>
-    <h2 class="sh">Khám Phá Ora Park Qua Góc Nhìn Thực Tế</h2>
-    <div class="bar"></div>
-    <div class="vid-layout">
-      <div>
-        <div class="vplayer" onclick="openVModal()">
-          <img id="vThumb" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=80" alt="Video"/>
-          <div class="play-ring"><div class="play-c"><div class="tri"></div></div></div>
-          <div class="vlabel" id="vLabel">Tổng quan dự án Ora Park by Dragon Pearl</div>
-          <div class="vdur">5:24</div>
-        </div>
-        <p style="font-size:12px;color:#aaa;margin-top:12px;line-height:1.7">Khám phá không gian sống, tiện ích và quy hoạch của Ora Park qua video flycam chuyên nghiệp.</p>
+<!-- VIDEO -->
+<section class="sec" id="video">
+  <div class="ey">Video dự án</div>
+  <h2 class="sh">Khám Phá Ora Park Qua Góc Nhìn Thực Tế</h2>
+  <div class="sep"></div>
+  <div class="vlayout">
+    <div>
+      <div class="vplayer-wrap">
+        <iframe id="ytMain"
+          src="https://www.youtube.com/embed/__GYHEn4Kkg?rel=0&modestbranding=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
       </div>
-      <div class="vlist">
-        <div class="vi on" onclick="pickV(0,this)">
-          <div class="vi-img"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=200&q=70" alt=""/></div>
-          <div><div class="vi-title">Tổng quan dự án Ora Park by Dragon Pearl</div><div class="vi-sub">5:24 · Flycam · Toàn khu</div></div>
-        </div>
-        <div class="vi" onclick="pickV(1,this)">
-          <div class="vi-img"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=200&q=70" alt=""/></div>
-          <div><div class="vi-title">Thiết kế biệt thự & nhà phố liên kế</div><div class="vi-sub">3:10 · Phối cảnh 3D · Nội thất</div></div>
-        </div>
-        <div class="vi" onclick="pickV(2,this)">
-          <div class="vi-img"><img src="https://images.unsplash.com/photo-1559599189-fe84dea4eb79?w=200&q=70" alt=""/></div>
-          <div><div class="vi-title">Hồ điều hòa 4.6ha & hệ thống công viên</div><div class="vi-sub">2:45 · Cảnh quan · Tiện ích xanh</div></div>
-        </div>
-        <div class="vi" onclick="pickV(3,this)">
-          <div class="vi-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=200&q=70" alt=""/></div>
-          <div><div class="vi-title">Vị trí chiến lược & kết nối vùng Tây Bắc</div><div class="vi-sub">4:00 · Infographic · Quy hoạch</div></div>
-        </div>
-        <div class="vi" onclick="pickV(4,this)">
-          <div class="vi-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=200&q=70" alt=""/></div>
-          <div><div class="vi-title">Shophouse & khu thương mại nội khu</div><div class="vi-sub">2:20 · Walkthrough · Kinh doanh</div></div>
-        </div>
+      <p style="font-size:12px;color:#aaa;margin-top:12px;line-height:1.7">Khám phá không gian sống, tiện ích và quy hoạch của Ora Park qua video flycam chuyên nghiệp từ đội ngũ ZenGroup.</p>
+    </div>
+    <div class="vlist">
+      <div class="vi on" onclick="pickV(0,this)">
+        <div class="vi-img" onclick="openLB(3);event.stopPropagation()"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&q=70" alt="Tổng quan Ora Park"/></div>
+        <div><div class="vi-t">Tổng quan dự án Ora Park by Dragon Pearl</div><div class="vi-s">5:24 · Flycam · Toàn khu</div></div>
+      </div>
+      <div class="vi" onclick="pickV(1,this)">
+        <div class="vi-img" onclick="openLB(0);event.stopPropagation()"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=200&q=70" alt="Thiết kế biệt thự"/></div>
+        <div><div class="vi-t">Thiết kế biệt thự & nhà phố liên kế</div><div class="vi-s">3:10 · Phối cảnh 3D</div></div>
+      </div>
+      <div class="vi" onclick="pickV(2,this)">
+        <div class="vi-img" onclick="openLB(4);event.stopPropagation()"><img src="https://images.unsplash.com/photo-1559599189-fe84dea4eb79?w=200&q=70" alt="Hồ điều hòa"/></div>
+        <div><div class="vi-t">Hồ điều hòa 4.6ha & hệ thống công viên</div><div class="vi-s">2:45 · Cảnh quan xanh</div></div>
+      </div>
+      <div class="vi" onclick="pickV(3,this)">
+        <div class="vi-img" onclick="openLB(6);event.stopPropagation()"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=200&q=70" alt="Vị trí"/></div>
+        <div><div class="vi-t">Vị trí chiến lược & kết nối vùng Tây Bắc</div><div class="vi-s">4:00 · Infographic</div></div>
+      </div>
+      <div class="vi" onclick="pickV(4,this)">
+        <div class="vi-img" onclick="openLB(2);event.stopPropagation()"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=200&q=70" alt="Shophouse"/></div>
+        <div><div class="vi-t">Mặt bằng & Sơ đồ phân lô Ora Park</div><div class="vi-s">2:20 · Walkthrough</div></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- VIDEO MODAL -->
 <div class="vmodal" id="vModal" onclick="if(event.target===this)closeVModal()">
@@ -614,41 +632,42 @@ footer{background:#030a12;padding:52px 52px 20px}
       <p>Ưu đãi có hạn · Số lượng giới hạn · Tư vấn miễn phí trong 24h</p>
     </div>
     <div class="cs-actions">
-      <a href="tel:0827156156" class="cs-btn-w">☎ 0827 156 156</a>
+      <a href="tel:0909990580" class="cs-btn-w">☎ 090 999 0580</a>
       <button class="cs-btn-d" onclick="openPopup()">🔑 Đăng ký mua suất</button>
     </div>
   </div>
 </div>
 <!-- ──────────── GOOGLE MAP ──────────── -->
-<div style="background:var(--light);padding:88px 0">
-  <div style="max-width:1160px;margin:0 auto;padding:0 48px">
+<div class="map-block">
+  <div class="map-inner">
     <div class="ey">Vị trí thực tế</div>
     <h2 class="sh">Tìm Đường Đến Ora Park</h2>
     <div class="sep"></div>
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:32px;align-items:stretch">
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <div style="background:#fff;border-radius:10px;padding:22px;border:1px solid var(--border)">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Địa chỉ</div>
-          <div style="font-size:14px;font-weight:500;color:var(--dark);margin-bottom:4px">Đường Tỉnh lộ 10</div>
-          <div style="font-size:13px;color:#888;line-height:1.6">Xã Mỹ Hạnh, Tây Ninh<br/>(Giáp ranh Hóc Môn & Bình Chánh)</div>
+    <div class="map-layout">
+      <div class="map-info">
+        <div class="map-card">
+          <div class="map-card-label">Địa chỉ</div>
+          <div class="map-card-title">Đường Tỉnh lộ 10</div>
+          <div class="map-card-sub">Xã Mỹ Hạnh, Tây Ninh<br/>(Giáp ranh Hóc Môn & Bình Chánh)</div>
         </div>
-        <div style="background:#fff;border-radius:10px;padding:22px;border:1px solid var(--border)">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Thời gian di chuyển</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">Quận 1</span><span style="font-weight:500;color:var(--dark)">~20 phút</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">Tân Sơn Nhất</span><span style="font-weight:500;color:var(--dark)">~25 phút</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">KCN An Hạ</span><span style="font-weight:500;color:var(--dark)">~5 phút</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">Aeon Tân Phú</span><span style="font-weight:500;color:var(--dark)">~30 phút</span></div>
-          </div>
+        <div class="map-card">
+          <div class="map-card-label">Thời gian di chuyển</div>
+          <div class="map-row"><span>Quận 1</span><span>~20 phút</span></div>
+          <div class="map-row"><span>Tân Sơn Nhất</span><span>~25 phút</span></div>
+          <div class="map-row"><span>KCN An Hạ</span><span>~5 phút</span></div>
+          <div class="map-row"><span>Aeon Tân Phú</span><span>~30 phút</span></div>
         </div>
-        <div style="background:var(--dark);border-radius:10px;padding:22px">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Hotline</div>
-          <a href="tel:0827156156" style="font-size:20px;font-weight:700;color:#fff;text-decoration:none;display:block;margin-bottom:10px">📞 0827 156 156</a>
-          <button onclick="openPopup()" style="width:100%;background:var(--gold);color:#fff;border:none;padding:11px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif">Đặt lịch tham quan →</button>
+        <div class="map-cta">
+          <div class="map-card-label" style="color:var(--gold)">Hotline</div>
+          <a href="tel:0909990580" class="map-tel">📞 090 999 0580</a>
+          <button class="map-btn" onclick="openPopup()">Đặt lịch tham quan →</button>
         </div>
       </div>
-      <div style="border-radius:12px;overflow:hidden;min-height:420px;border:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,.08)">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7837.744219149579!2d106.5011188!3d10.8210979!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310ad5002b82b8e1%3A0x131c15080fc0d96d!2zQ-G7lW5nIGtodSBkw6JuIGPGsCBPcmEgUGFyaw!5e0!3m2!1sen!2s!4v1776095413225!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-frame-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.782808096217!2d106.50255437548465!3d10.827926458240738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310ad5002b82b8e1%3A0x131c15080fc0d96d!2zQ-G7lW5nIGtodSBkw6JuIGPGsCBPcmEgUGFyaw!5e0!3m2!1sen!2s!4v1776101359562!5m2!1sen!2s"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </div>
   </div>
@@ -659,10 +678,9 @@ footer{background:#030a12;padding:52px 52px 20px}
     <div>
       <div class="fb-n">ORA PARK <span>by Dragon Pearl</span></div>
       <p class="fb-d">Lõi tiện ích trung tâm đại đô thị Dragon Pearl.<br/>Chủ đầu tư: Công ty CP BĐS Đức Hòa Đông.<br/>Vận hành: ZenGroup.</p>
-      <a href="tel:0827156156" class="fb-tel">📞 0827 156 156</a>
+      <a href="tel:0909990580" class="fb-tel">📞 090 999 0580</a>
     </div>
-    <div class="fcol"><h4>Dự án</h4><ul><li><a href="#about">Tổng quan</a></li><li><a href="#video">Video</a></li><li><a href="#products">Sản phẩm</a></li><li><a href="#reviews">Đánh giá</a></li></ul></div>
-    <div class="fcol"><h4>Thông tin</h4><ul><li><a href="#amenities">Tiện ích</a></li><li><a href="mailto:contact@orapark.com.vn">Email liên hệ</a></li><li><a href="#">orapark.com.vn</a></li></ul></div>
+    <div class="fcol"><h4>Dự án</h4><ul><li><a href="#about">Tổng quan</a></li><li><a href="#hinh-anh">Hình ảnh</a></li><li><a href="#video">Video</a></li><li><a href="#products">Sản phẩm</a></li><li><a href="#reviews">Đánh giá</a></li></ul></div>
     <div class="fcol"><h4>Địa chỉ</h4><ul><li><a href="#">Đường TL10, xã Mỹ Hạnh</a></li><li><a href="#">Tây Ninh (Long An cũ)</a></li><li><a href="#">Giáp Hóc Môn & Bình Chánh</a></li></ul></div>
   </div>
   <div class="fbot"><span>© 2025 Ora Park by Dragon Pearl · All rights reserved</span><span>Phát triển: Đức Hòa Đông · Vận hành: ZenGroup</span></div>
@@ -671,7 +689,7 @@ footer{background:#030a12;padding:52px 52px 20px}
 <!-- ── FLOATING ── -->
 <div class="fab">
   <button class="fab-reg" onclick="openPopup()">🔑 Đăng ký mua suất</button>
-  <a href="tel:0827156156" class="fab-tel">📞 0827 156 156</a>
+  <a href="tel:0909990580" class="fab-tel">📞 090 999 0580</a>
 </div>
 <!-- ══ LIGHTBOX ══ -->
 <div class="lb" id="lb">
@@ -699,9 +717,9 @@ footer{background:#030a12;padding:52px 52px 20px}
     <div class="popup-body">
       <div id="popupForm">
         <div class="popup-offer">
-          <div class="po">🥇 Tặng 1 Chỉ Vàng SJC</div>
-          <div class="po">💰 Chiết khấu 1%</div>
-          <div class="po">🏦 Vay tối đa 70%</div>
+          <div class="po">Vay tối đa 70%</div>
+          <div class="po">Sổ hồng riêng từng nền</div>
+          <div class="po">Xây dựng tự do</div>
         </div>
         <div class="pfrow">
           <div class="pfg"><label>Họ và tên *</label><input type="text" id="p-name" placeholder="Nguyễn Văn A"/></div>
@@ -717,13 +735,13 @@ footer{background:#030a12;padding:52px 52px 20px}
           </div>
         </div>
         <button class="psub" onclick="submitPopup()">🔑 ĐĂNG KÝ MUA SUẤT NGAY</button>
-        <div class="popup-note">🔒 Thông tin bảo mật · 📞 Hoặc gọi ngay <strong style="color:var(--gold)">0827 156 156</strong></div>
+        <div class="popup-note">🔒 Thông tin bảo mật · 📞 Hoặc gọi ngay <strong style="color:var(--gold)">090 999 0580</strong></div>
       </div>
       <div class="popup-success" id="popupSuccess">
         <div class="ps-ico">✅</div>
         <div class="ps-title">Đăng ký thành công!</div>
         <div class="ps-sub">Cảm ơn bạn đã quan tâm đến Ora Park.<br/>Chuyên viên sẽ liên hệ trong vòng <strong>24 giờ</strong>.</div>
-        <div class="ps-tel">Hotline hỗ trợ ngay: <a href="tel:0827156156">0827 156 156</a></div>
+        <div class="ps-tel">Hotline hỗ trợ ngay: <a href="tel:0909990580">090 999 0580</a></div>
       </div>
     </div>
   </div>
@@ -810,22 +828,30 @@ function submitHP(){
 }
 
 // Video playlist
-var vids=[
-  {thumb:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=80',label:'Tổng quan dự án Ora Park by Dragon Pearl'},
-  {thumb:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=80',label:'Thiết kế biệt thự & nhà phố liên kế'},
-  {thumb:'https://images.unsplash.com/photo-1559599189-fe84dea4eb79?w=900&q=80',label:'Hồ điều hòa 4.6ha & hệ thống công viên'},
-  {thumb:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=80',label:'Vị trí chiến lược & kết nối vùng Tây Bắc'},
-  {thumb:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80',label:'Shophouse & khu thương mại nội khu'}
+var vThumbs=[
+  'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=80',
+  'https://images.unsplash.com/photo-1559599189-fe84dea4eb79?w=900&q=80',
+  'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=900&q=80',
+  'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80'
 ];
+var vLabels=['Tổng quan dự án Ora Park by Dragon Pearl','Thiết kế biệt thự & nhà phố liên kế','Hồ điều hòa 4.6ha & hệ thống công viên','Vị trí chiến lược & kết nối vùng Tây Bắc','Mặt bằng & Sơ đồ phân lô Ora Park'];
 function pickV(i,el){
-  document.getElementById('vThumb').src=vids[i].thumb;
-  document.getElementById('vLabel').textContent=vids[i].label;
-  document.getElementById('vModalTitle').textContent=vids[i].label;
+  document.getElementById('vThumb').src=vThumbs[i];
+  document.getElementById('vLabel').textContent=vLabels[i];
+  document.getElementById('vModTitle').textContent=vLabels[i];
   document.querySelectorAll('.vi').forEach(function(v){v.classList.remove('on')});
   el.classList.add('on');
 }
-function openVModal(){document.getElementById('vModal').classList.add('open')}
-function closeVModal(){document.getElementById('vModal').classList.remove('open')}
+var YT_IDS=['__GYHEn4Kkg','__GYHEn4Kkg','__GYHEn4Kkg','__GYHEn4Kkg','__GYHEn4Kkg'];
+
+function pickV(i,el){
+  var frame=document.getElementById('ytMain');
+  frame.src='https://www.youtube.com/embed/'+YT_IDS[i]+'?rel=0&modestbranding=1&autoplay=1';
+  document.querySelectorAll('.vi').forEach(function(v){v.classList.remove('on')});
+  el.classList.add('on');
+}
+
 
 // POPUP
 function openPopup(prod){
