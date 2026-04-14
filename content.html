@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dragon Pearl — Chiến lược Content 8 Tuần</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8B6E2A;
+    --dark: #0A0A0E;
+    --dark2: #111118;
+    --dark3: #1A1A24;
+    --dark4: #22222F;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(201,168,76,0.2);
+    --text: #E8E6DF;
+    --text-dim: #9A9485;
+    --blue: #4A90D9;
+    --green: #4AB87A;
+    --amber: #E8A020;
+    --red: #D94A4A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(201,168,76,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(74,144,217,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    color: var(--gold); text-transform: uppercase;
+    border: 1px solid var(--glass-border);
+    padding: 6px 16px; border-radius: 100px;
+    background: rgba(201,168,76,0.06);
+    margin-bottom: 28px;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '◆'; font-size: 6px; opacity: 0.6;
+  }
+
+  .hero h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dim));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-dim); line-height: 1.7;
+    max-width: 520px; margin: 0 auto 40px;
+  }
+
+  .divider-line {
+    display: flex; align-items: center; gap: 16px;
+    margin: 40px 0 50px;
+    color: var(--gold-dim); font-size: 11px; letter-spacing: 0.1em;
+  }
+  .divider-line::before, .divider-line::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+  }
+
+  /* METRICS ROW */
+  .metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 50px;
+  }
+
+  .metric {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative; overflow: hidden;
+    transition: border-color .3s, transform .2s;
+  }
+
+  .metric:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-2px);
+  }
+
+  .metric::before {
+    content: ''; position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  }
+
+  .metric-value {
+    font-family: 'Roboto', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1.1;
+  }
+
+  .metric-label {
+    font-size: 11px; color: var(--text-dim);
+    margin-top: 4px; letter-spacing: 0.05em;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 4px;
+    background: var(--dark2);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+
+  .tab {
+    flex: 1; padding: 10px 14px;
+    border-radius: 10px;
+    border: none; cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-dim);
+    background: transparent;
+    transition: all .25s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .tab.active {
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08));
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .tab:hover:not(.active) {
+    color: var(--text);
+    background: var(--glass);
+  }
+
+  /* PANELS */
+  .panel { display: none; animation: fadeIn .3s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    color: var(--gold-dim); text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
+
+  /* FUNNEL */
+  .funnel {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-bottom: 40px;
+    position: relative;
+  }
+
+  .funnel-step {
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    border-right: none;
+    padding: 20px 14px;
+    text-align: center;
+    position: relative;
+    transition: background .2s;
+  }
+
+  .funnel-step:first-child { border-radius: 12px 0 0 12px; }
+  .funnel-step:last-child { border-radius: 0 12px 12px 0; border-right: 1px solid var(--glass-border); }
+
+  .funnel-step:hover { background: var(--dark4); }
+
+  .funnel-step::after {
+    content: '→';
+    position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+    color: var(--gold-dim); font-size: 16px; z-index: 2;
+  }
+  .funnel-step:last-child::after { display: none; }
+
+  .f-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+  .f-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .f-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.4; }
+
+  /* ALERT BOX */
+  .alert {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 13px; color: var(--text-dim); line-height: 1.7;
+  }
+  .alert strong { color: var(--gold-light); }
+
+  /* 3 PILLARS */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+
+  .pillar {
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 22px 18px;
+    transition: border-color .2s, transform .2s;
+  }
+  .pillar:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
+
+  .pillar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .pillar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+
+  .badge {
+    font-size: 10px; font-weight: 600; padding: 3px 8px;
+    border-radius: 100px; letter-spacing: 0.05em;
+  }
+  .badge-blue { background: rgba(74,144,217,0.15); color: #7ABAFF; border: 1px solid rgba(74,144,217,0.25); }
+  .badge-amber { background: rgba(232,160,32,0.15); color: #F0C060; border: 1px solid rgba(232,160,32,0.25); }
+  .badge-green { background: rgba(74,184,122,0.15); color: #7ADFA0; border: 1px solid rgba(74,184,122,0.25); }
+  .badge-red { background: rgba(217,74,74,0.15); color: #FF9090; border: 1px solid rgba(217,74,74,0.25); }
+
+  .pillar-items { display: flex; flex-direction: column; gap: 8px; }
+  .pillar-item { font-size: 12px; color: var(--text-dim); line-height: 1.5; padding-left: 12px; position: relative; }
+  .pillar-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: var(--gold-dim); }
+
+  /* WEEK GRID */
+  .week-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+
+  .week-card {
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: border-color .2s;
+  }
+  .week-card:hover { border-color: rgba(201,168,76,0.25); }
+
+  .week-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; gap: 8px;
+  }
+  .week-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .week-items { display: flex; flex-direction: column; gap: 9px; }
+  .week-item { display: flex; gap: 8px; align-items: flex-start; }
+  .week-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .week-text { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+  .week-text b { color: var(--text); font-weight: 500; }
+
+  /* PLATFORM GRID */
+  .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+
+  .platform-card {
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: border-color .2s;
+  }
+  .platform-card:hover { border-color: rgba(201,168,76,0.3); }
+
+  .platform-name {
+    font-size: 14px; font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .platform-detail { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
+  .platform-detail b { color: var(--text); font-weight: 500; }
+
+  /* PILLS */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .pill {
+    font-size: 11px; padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    color: var(--text-dim);
+    transition: border-color .2s, color .2s;
+    cursor: default;
+  }
+  .pill:hover { border-color: var(--gold-dim); color: var(--gold-light); }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 50px 30px;
+    background: var(--dark3);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    position: relative; overflow: hidden;
+    margin-top: 50px;
+  }
+  .cta-section::before {
+    content: ''; position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(201,168,76,0.1), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--text); margin-bottom: 10px;
+  }
+
+  .cta-section p {
+    font-size: 14px; color: var(--text-dim);
+    margin-bottom: 24px; line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color: var(--dark);
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px; font-weight: 700;
+    padding: 14px 32px; border-radius: 100px;
+    text-decoration: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.2);
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,168,76,0.35);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 0 20px;
+    font-size: 11px;
+    color: var(--text-dim);
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .funnel { grid-template-columns: repeat(2, 1fr); }
+    .funnel-step:nth-child(2) { border-radius: 0 12px 0 0; border-right: 1px solid var(--glass-border); }
+    .funnel-step:nth-child(3) { border-radius: 0 0 0 12px; border-top: none; }
+    .funnel-step:nth-child(2)::after, .funnel-step:nth-child(4)::after { display: none; }
+    .funnel-step:nth-child(1)::after, .funnel-step:nth-child(3)::after { display: block; }
+    .pillars { grid-template-columns: 1fr; }
+    .week-grid { grid-template-columns: 1fr; }
+    .platform-grid { grid-template-columns: 1fr; }
+    .tabs { flex-wrap: wrap; }
+    .tab { flex: none; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Chiến lược content 2026 (3 tháng)</div>
+    <h1>Dragon Pearl<br><span>Content Roadmap</span></h1>
+    <p class="hero-sub">Kế hoạch phát triển nội dung đa nền tảng 8 tuần — từ xây dựng authority đến thu lead bán BĐS Long An</p>
+    <div class="divider-line">05/2025 – 07/2026</div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-value">80+</div>
+      <div class="metric-label">Bài / Video / Post</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">4</div>
+      <div class="metric-label">Kênh phát triển</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">8W</div>
+      <div class="metric-label">Trước tháng 7/2026</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">Lead</div>
+      <div class="metric-label">→ CSKH chốt đơn</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview', this)">Tổng quan</button>
+    <button class="tab" onclick="switchTab('phase1', this)">Giai đoạn 1 — Tuần 1–4</button>
+    <button class="tab" onclick="switchTab('phase2', this)">Giai đoạn 2 — Tuần 5–8</button>
+    <button class="tab" onclick="switchTab('channels', this)">Kênh & CTA</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="panel-overview" class="panel active">
+
+    <div class="sec-title">Hành trình khách hàng & phễu content</div>
+    <div class="funnel">
+      <div class="funnel-step">
+        <span class="f-icon">🔍</span>
+        <div class="f-name">Nhận biết</div>
+        <div class="f-sub">SEO · TikTok viral</div>
+      </div>
+      <div class="funnel-step">
+        <span class="f-icon">🏠</span>
+        <div class="f-name">Quan tâm</div>
+        <div class="f-sub">Review BĐS Long An</div>
+      </div>
+      <div class="funnel-step">
+        <span class="f-icon">💡</span>
+        <div class="f-name">Cân nhắc</div>
+        <div class="f-sub">Dragon Pearl spotlight</div>
+      </div>
+      <div class="funnel-step">
+        <span class="f-icon">📞</span>
+        <div class="f-name">Lead</div>
+        <div class="f-sub">CTA → CSKH</div>
+      </div>
+    </div>
+
+    <div class="alert">
+      <strong>Chiến lược cốt lõi — "Trojan Horse" content:</strong> Không ra mắt như kênh bán hàng. Xây dựng uy tín qua nội dung review BĐS Long An khách quan 4 tuần đầu, sau đó dẫn dắt tự nhiên về Dragon Pearl khi audience đã tin tưởng. CTA luôn mềm: <em>"Tư vấn miễn phí"</em> thay vì <em>"Mua ngay"</em>.
+    </div>
+
+    <div class="sec-title">3 trụ cột nội dung</div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-header">
+          <div class="pillar-title">Giáo dục thị trường</div>
+          <span class="badge badge-blue">60%</span>
+        </div>
+        <div class="pillar-items">
+          <div class="pillar-item">"BĐS Long An có nên mua?" — phân tích khách quan</div>
+          <div class="pillar-item">So sánh khu vực: Bến Lức, Đức Hòa, Cần Giuộc</div>
+          <div class="pillar-item">Pháp lý BĐS, vay ngân hàng, thuế phí 2026</div>
+          <div class="pillar-item">Hạ tầng, quy hoạch Long An 2026–2030</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-header">
+          <div class="pillar-title">Review dự án</div>
+          <span class="badge badge-amber">30%</span>
+        </div>
+        <div class="pillar-items">
+          <div class="pillar-item">Review 3–5 dự án khác trong khu vực (khách quan)</div>
+          <div class="pillar-item">Dragon Pearl: bài review sâu, video thực tế</div>
+          <div class="pillar-item">Bảng so sánh: vị trí / pháp lý / giá / tiện ích</div>
+          <div class="pillar-item">Testimonial / khách hàng chia sẻ</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-header">
+          <div class="pillar-title">Viral & Social</div>
+          <span class="badge badge-green">10%</span>
+        </div>
+        <div class="pillar-items">
+          <div class="pillar-item">TikTok hook: "5 sai lầm khi mua đất Long An"</div>
+          <div class="pillar-item">Vlog thực tế: đi xem đất, phỏng vấn nhanh</div>
+          <div class="pillar-item">Comment bait: "Tag người đang tìm mua đất"</div>
+          <div class="pillar-item">Story FB / Reels IG hậu trường dự án</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">KPI mục tiêu tháng 9</div>
+    <div class="week-grid">
+      <div class="week-card">
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>SEO:</b> 10–15 bài top 10 Google từ khóa "BĐS Long An"</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> 1–2 video 100K+ view, đạt 5K follower</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>YouTube/ Facebook:</b> 8–10 video, 500+ subscriber</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>Lead:</b> 50–100 lead/tháng vào CSKH</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:var(--gold)"></div><div class="week-text"><b>3 loại CTA luân phiên:</b> Mềm → Trung → Mạnh theo từng giai đoạn</div></div>
+          <div class="week-item"><div class="week-dot" style="background:var(--gold)"></div><div class="week-text"><b>Mềm:</b> "Tải checklist kiểm tra pháp lý miễn phí" → thu email</div></div>
+          <div class="week-item"><div class="week-dot" style="background:var(--gold)"></div><div class="week-text"><b>Trung:</b> "Đăng ký nhận bảng giá Dragon Pearl" → thu SĐT</div></div>
+          <div class="week-item"><div class="week-dot" style="background:var(--gold)"></div><div class="week-text"><b>Mạnh:</b> "Đặt lịch xem thực tế có chuyên viên đồng hành"</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PHASE 1 -->
+  <div id="panel-phase1" class="panel">
+    <div class="alert">
+      <strong>Giai đoạn 1 — Xây nền & tạo authority (Tuần 1–4):</strong> Tập trung 100% vào nội dung giáo dục, chưa mention Dragon Pearl. Mục tiêu: được Google index, TikTok bắt đầu đề xuất, xây dựng trust với audience.
+    </div>
+
+    <div class="week-grid">
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 1 — Setup & Research</div>
+          <span class="badge badge-blue">Nền tảng</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Setup blog, keyword research "BĐS Long An". Viết 3 bài SEO dài 2000+ chữ</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> Tạo kênh, 3 video đầu — hook quy hoạch Long An, hạ tầng cao tốc</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB Page:</b> Tạo page "Review BĐS Long An", 5 bài đăng đầu tiên</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YouTube:</b> Kênh + video: "Tổng quan thị trường BĐS Long An 2026"</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 2 — Content thị trường</div>
+          <span class="badge badge-blue">Giáo dục</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Phân tích từng khu vực: Bến Lức, Đức Hòa, Cần Giuộc — ưu/nhược điểm</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "5 sai lầm khi mua đất Long An" — hook đánh vào nỗi sợ mất tiền</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> Series "Mỗi ngày một tip BĐS" — boost bài có tương tác tốt nhất</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YT:</b> "Vùng nào ở Long An đang tăng giá nhất?" — data thực tế</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 3 — Pháp lý & Tài chính</div>
+          <span class="badge badge-amber">Chuyên sâu</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Vay ngân hàng mua BĐS Long An, thủ tục pháp lý, thuế phí 2026</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "Cách kiểm tra pháp lý đất trước khi mua" — nội dung save được</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> Live hỏi đáp pháp lý BĐS — build community</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YT:</b> "Cẩm nang vay tiền mua đất 2026" — video dài, nhiều search volume</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 4 — Review đa dự án</div>
+          <span class="badge badge-amber">So sánh</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Review 3 dự án BĐS Long An khác — khách quan, build trust</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "Đi xem thực tế dự án [X] — có đáng mua không?" — format vlog</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> Bảng so sánh các dự án — post được share nhiều, CTA mềm cuối bài</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YT:</b> Series: "Dự án [tên] Long An — đánh giá thực tế"</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Keyword hooks gợi ý — Tuần 1–4</div>
+    <div class="pill-row">
+      <div class="pill">BĐS Long An có nên mua 2026?</div>
+      <div class="pill">Cao tốc nào đi qua Long An?</div>
+      <div class="pill">Đất Bến Lức bao nhiêu 1m²?</div>
+      <div class="pill">Quy hoạch Long An 2030</div>
+      <div class="pill">Mua đất Long An cần giấy tờ gì?</div>
+      <div class="pill">Long An có ngập lụt không?</div>
+      <div class="pill">Khu dân cư nào uy tín ở Long An?</div>
+      <div class="pill">Lãi suất vay mua đất 2026</div>
+      <div class="pill">Hạ tầng Long An mới nhất</div>
+      <div class="pill">Nên mua đất Cần Giuộc hay Bến Lức?</div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div id="panel-phase2" class="panel">
+    <div class="alert">
+      <strong>Giai đoạn 2 — Spotlight Dragon Pearl & thu lead (Tuần 5–8):</strong> Sau khi có authority, bắt đầu đưa Dragon Pearl vào nội dung. Mềm đầu (so sánh), sau đó chuyên sâu, cuối giai đoạn là CTA mạnh và chiến dịch lead đồng loạt.
+    </div>
+
+    <div class="week-grid">
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 5 — Dragon Pearl ra mắt</div>
+          <span class="badge badge-green">Spotlight</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Bài review đầu tiên: "Đánh giá thực tế dự án Dragon Pearl Long An"</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "Tôi đi xem Dragon Pearl — ấn tượng gì?" — chân thực, không quảng cáo lộ</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>YT:</b> Video tour thực tế Dragon Pearl, phỏng vấn chủ đầu tư</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>FB:</b> Album ảnh thực tế + mini-review, CTA: "Nhận tư vấn miễn phí"</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 6 — So sánh & Lợi thế</div>
+          <span class="badge badge-green">Cạnh tranh</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> "Dragon Pearl vs [dự án X]: So sánh chi tiết" — bảng data đầy đủ</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "3 điều Dragon Pearl khác biệt so với các dự án cùng khu vực"</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> Infographic so sánh — boosted post, target 28–45 tuổi TP.HCM + Long An</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YT:</b> "5 lý do Dragon Pearl đáng cân nhắc" — SEO title có brand + khu vực</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 7 — Social proof & Urgency</div>
+          <span class="badge badge-amber">Conversion</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> "Khách hàng nói gì về Dragon Pearl?" — testimonial, câu chuyện thực</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> Phỏng vấn khách hàng / gia đình quan tâm — authentic</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> "Còn X căn ưu đãi" — urgency + form lead trực tiếp</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YT:</b> "Tại sao tôi đặt cọc Dragon Pearl?" — storytelling dạng vlog</div></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-head">
+          <div class="week-name">Tuần 8 — Launch chiến dịch lead</div>
+          <span class="badge badge-red">Chốt đơn</span>
+        </div>
+        <div class="week-items">
+          <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Landing page Dragon Pearl + form đăng ký tư vấn — tất cả traffic dồn về đây</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> Video "Sự kiện mở bán Dragon Pearl" — livestream hoặc clip event</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>FB:</b> Chạy ads retarget + lead form campaign đồng loạt</div></div>
+          <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>Tất cả kênh:</b> CTA đồng loạt: "Đặt lịch tư vấn 1-1 miễn phí" → SĐT / Zalo CSKH</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Keyword hooks gợi ý — Tuần 5–8</div>
+    <div class="pill-row">
+      <div class="pill">Dragon Pearl Long An review thực tế</div>
+      <div class="pill">Dragon Pearl có đáng mua không?</div>
+      <div class="pill">Dragon Pearl pháp lý như thế nào?</div>
+      <div class="pill">Dragon Pearl vs [đối thủ]</div>
+      <div class="pill">Dragon Pearl vị trí thuận lợi?</div>
+      <div class="pill">Mua Dragon Pearl có sinh lời?</div>
+      <div class="pill">Sự kiện mở bán Dragon Pearl 2026</div>
+      <div class="pill">Dragon Pearl chiết khấu bao nhiêu?</div>
+    </div>
+  </div>
+
+  <!-- CHANNELS -->
+  <div id="panel-channels" class="panel">
+
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="platform-name">🌐 Website / Blog SEO</div>
+        <div class="platform-detail">
+          <b>Tần suất:</b> 3 bài/tuần (2000+ chữ)<br>
+          <b>Keyword cluster:</b> "BĐS Long An", "mua đất Long An", "Dragon Pearl Long An"<br>
+          <b>Loại bài:</b> Phân tích thị trường, hướng dẫn, review dự án<br>
+          <b>CTA:</b> Form "Đăng ký tư vấn miễn phí" cuối bài + Zalo float button<br>
+          <b>Tool:</b> WordPress + Rank Math SEO
+        </div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">🎵 TikTok</div>
+        <div class="platform-detail">
+          <b>Tần suất:</b> 5 video/tuần (60–90 giây)<br>
+          <b>Hook 3 giây đầu:</b> Câu hỏi tò mò hoặc số liệu gây sốc<br>
+          <b>Format:</b> Talking head + B-roll thực địa, POV, vlog đi xem đất<br>
+          <b>CTA:</b> "Link bio để xem chi tiết" hoặc "Comment SĐT nhận tư vấn"<br>
+          <b>Hashtag:</b> #bdsLongAn #muadatLongAn #dragonpearl
+        </div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">📺 YouTube</div>
+        <div class="platform-detail">
+          <b>Tần suất:</b> 1–2 video/tuần (8–20 phút)<br>
+          <b>Content:</b> Review dự án thực tế, phân tích thị trường<br>
+          <b>SEO title:</b> "[Dự án] Long An 2026 — Review thực tế có đáng mua?"<br>
+          <b>CTA:</b> Pinned comment + mô tả: SĐT CSKH, link landing page<br>
+          <b>Retention:</b> Hứa reveal cuối video để giữ người xem
+        </div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">📘 Facebook</div>
+        <div class="platform-detail">
+          <b>Kênh:</b> Page review BĐS Long An + Group cộng đồng<br>
+          <b>Tần suất:</b> 2 bài/ngày (text, ảnh, video ngắn, infographic)<br>
+          <b>Boosted post:</b> Target 28–45 tuổi, TP.HCM + Long An<br>
+          <b>CTA:</b> Nút "Nhắn tin" → Messenger bot → CSKH<br>
+          <b>Retarget:</b> Tuần 7–8 chạy ads retarget người đã tương tác
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Phễu CTA từng kênh → CSKH</div>
+    <div class="week-card" style="margin-bottom: 24px;">
+      <div class="week-items">
+        <div class="week-item"><div class="week-dot" style="background:#7ABAFF"></div><div class="week-text"><b>Web:</b> Form "Nhận tư vấn miễn phí" → Email/SĐT → CRM → CSKH gọi lại trong 30 phút</div></div>
+        <div class="week-item"><div class="week-dot" style="background:#7ADFA0"></div><div class="week-text"><b>TikTok:</b> "Comment SĐT" hoặc link bio → Landing page → Form → CSKH</div></div>
+        <div class="week-item"><div class="week-dot" style="background:#F0C060"></div><div class="week-text"><b>Facebook:</b> Lead Ads form → tự động vào sheet/CRM → CSKH nhận notify tức thì</div></div>
+        <div class="week-item"><div class="week-dot" style="background:#FF9090"></div><div class="week-text"><b>YouTube:</b> Pinned comment SĐT + mô tả → Zalo OA → CSKH</div></div>
+        <div class="week-item"><div class="week-dot" style="background:var(--gold)"></div><div class="week-text"><b>Nguyên tắc:</b> CTA mềm giai đoạn 1: "Tư vấn miễn phí" · CTA mạnh giai đoạn 2: "Đặt lịch xem thực tế"</div></div>
+      </div>
+    </div>
+
+    <div class="sec-title">Nhân sự dự trù</div>
+    <div class="pill-row">
+      <div class="pill">1 Content Writer — SEO + FB</div>
+      <div class="pill">1 Video Creator — TikTok + YT</div>
+      <div class="pill">1 Designer — Infographic + thumbnail</div>
+      <div class="pill">1 CSKH — xử lý lead trong 30 phút</div>
+      <div class="pill">1 Ads Manager — FB boost + retarget</div>
+    </div>
+  </div>
+
+
+  <footer>Dragon Pearl Content Strategy 2026 · Long An Real Estate</footer>
+</div>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
